@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=fluent-plymouth-theme
+Description=Fluent Plymouth Theme
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/fluent-plymouth-theme
+ScriptFile=/usr/share/plymouth/themes/fluent-plymouth-theme/fluent-plymouth-theme.script

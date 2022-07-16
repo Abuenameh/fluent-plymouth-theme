@@ -8,16 +8,25 @@ function ConvertScalingRate(scaling_rate) {
 	return scaling_rate;
 }
 
-logo.original_image = Image("logo.png");
+background.original_image = Image("background.png");
+background.image = background.original_image.Scale(Window.GetWidth(), Window.GetHeight());
+background.sprite = Sprite(background.image);
+background.sprite.SetX(0)
+background.sprite.SetY(0)
+
+logo.original_image = Image("kde.png");
 logo.image = logo.original_image.Scale(
-	ConvertScalingRate(0.14),
-	ConvertScalingRate(0.14)
+	// ConvertScalingRate(0.14),
+	// ConvertScalingRate(0.14)
+	ConvertScalingRate(0.3),
+	ConvertScalingRate(0.3)
 );
 logo.sprite = Sprite(logo.image);
 
 logo.sprite.SetOpacity(1);
 logo.sprite.SetX((Window.GetX() + Window.GetWidth() - logo.image.GetWidth()) / 2);
 logo.sprite.SetY((Window.GetY() + Window.GetHeight() - logo.image.GetHeight()) * 0.45);
+logo.sprite.SetY(Window.GetHeight() / 3);
 
 //--------------------------------------------- Dialogue ----------------------------------------------------//
 
@@ -101,38 +110,13 @@ Plymouth.SetDisplayPasswordFunction(display_password_callback);
 //-------------------------------------------- Progress Bar --------------------------------------------------//
 
 if (Plymouth.GetMode() == "boot") {
-	progress_box.original_image = Image("progress/progress_box.png");
-	progress_box.image = progress_box.original_image.Scale(ConvertScalingRate(0.24), ConvertScalingRate(0.01));
-	progress_box.sprite = Sprite(progress_box.image);
-
-	progress_box.x = Window.GetX() + Window.GetWidth() / 2 - progress_box.image.GetWidth() / 2;
-	progress_box.y = Window.GetY() + Window.GetHeight() * 0.65 - progress_box.image.GetHeight() / 2;
-	progress_box.sprite.SetPosition(progress_box.x, progress_box.y, 0);
-
-	progress_bar.original_image = Image("progress/progress_bar.png");
-	progress_bar.image = progress_bar.original_image.Scale(ConvertScalingRate(0.24), ConvertScalingRate(0.01));
-	progress_bar.sprite = Sprite();
-
-	progress_bar.x = Window.GetX() + Window.GetWidth() / 2 - progress_bar.image.GetWidth() / 2;
-	progress_bar.y = Window.GetY() + Window.GetHeight() * 0.65 - progress_box.image.GetHeight() / 2;
-	progress_bar.sprite.SetPosition(progress_bar.x, progress_bar.y, 1);
-
-	function progress_callback(duration, progress) {
-		if (progress_bar.next_image.GetWidth() != Math.Int(progress_bar.image.GetWidth() * progress)) {
-			progress_bar.next_image = progress_bar.image.Scale(
-				progress_bar.image.GetWidth(progress_bar.image) * progress,
-				progress_bar.image.GetHeight()
-			);
-			progress_bar.sprite.SetImage(progress_bar.next_image);
-		}
-	}
-} else {
 	spin.original_image = Image("spin/spin0.png");
 	spin.image = spin.original_image.Scale(ConvertScalingRate(0.03), ConvertScalingRate(0.03));
 
 	spin.sprite = Sprite();
 	spin.sprite.SetX((Window.GetX() + Window.GetWidth() - spin.image.GetWidth()) / 2);
 	spin.sprite.SetY((Window.GetY() + Window.GetHeight() - spin.image.GetHeight()) * 0.65);
+	spin.sprite.SetY(Window.GetY() + Window.GetHeight() * 0.65);
 
 	function progress_callback(time) {
 		spin.original_image = Image("spin/spin" + Math.Int((time * 6) % 12) + ".png");
