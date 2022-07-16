@@ -57,12 +57,12 @@ function DisplayQuestionCallback(prompt, entry) {
     question.image = Image.Text(prompt, 1, 1, 1);
     question.sprite = Sprite(question.image);
     question.sprite.SetX(screen.half.w - question.image.GetWidth() / 2);
-    question.sprite.SetY(screen.h - 4 * question.image.GetHeight());
+    question.sprite.SetY(screen.h - 6 * question.image.GetHeight());
 
     answer.image = Image.Text(entry, 1, 1, 1);
     answer.sprite = Sprite(answer.image);
     answer.sprite.SetX(screen.half.w - answer.image.GetWidth() / 2);
-    answer.sprite.SetY(screen.h - 2 * answer.image.GetHeight());
+    answer.sprite.SetY(screen.h - 4 * answer.image.GetHeight());
 }
 Plymouth.SetDisplayQuestionFunction(DisplayQuestionCallback);
 
@@ -75,14 +75,14 @@ function DisplayPasswordCallback(nil, bulletCount) {
     prompt.image = Image.Text("Enter Password", 1, 1, 1);
     prompt.sprite = Sprite(prompt.image);
     prompt.sprite.SetX(screen.half.w - prompt.image.GetWidth() / 2);
-    prompt.sprite.SetY(screen.h - 4 * prompt.image.GetHeight());
+    prompt.sprite.SetY(screen.h - 6 * prompt.image.GetHeight());
 
     // Clear all bullets (user might hit backspace)
     bullets = null;
     for (i = 0; i < bulletCount; i++) {
         bullets[i].sprite = Sprite(bullet.image);
         bullets[i].sprite.SetX(startPos + i * bullet.image.GetWidth());
-        bullets[i].sprite.SetY(screen.h - 2 * bullet.image.GetHeight());
+        bullets[i].sprite.SetY(screen.h - 4 * bullet.image.GetHeight());
     }
 }
 Plymouth.SetDisplayPasswordFunction(DisplayPasswordCallback);
