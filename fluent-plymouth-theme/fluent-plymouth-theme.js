@@ -11,8 +11,8 @@ function ConvertScalingRate(scaling_rate) {
 background.original_image = Image("background.png");
 background.image = background.original_image.Scale(Window.GetWidth(), Window.GetHeight());
 background.sprite = Sprite(background.image);
-background.sprite.SetX(0)
-background.sprite.SetY(0)
+background.sprite.SetX(0);
+background.sprite.SetY(0);
 
 logo.original_image = Image("kde.png");
 logo.image = logo.original_image.Scale(
