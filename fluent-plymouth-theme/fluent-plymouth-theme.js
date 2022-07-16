@@ -28,6 +28,84 @@ logo.sprite.SetX((Window.GetX() + Window.GetWidth() - logo.image.GetWidth()) / 2
 logo.sprite.SetY((Window.GetY() + Window.GetHeight() - logo.image.GetHeight()) * 0.45);
 logo.sprite.SetY(Window.GetHeight() / 3);
 
+// Screen size
+screen.w = Window.GetWidth();
+screen.h = Window.GetHeight();
+screen.half.w = Window.GetWidth() / 2;
+screen.half.h = Window.GetHeight() / 2;
+
+// Question prompt
+question = null;
+answer = null;
+
+// Message
+message = null;
+
+// Password prompt
+bullets = null;
+prompt = null;
+bullet.image = Image.Text("*", 1, 1, 1);
+
+//------------------------------------- Password prompt -------------------------------
+function DisplayQuestionCallback(prompt, entry) {
+    question = null;
+    answer = null;
+
+    if (entry == "")
+        entry = "<answer>";
+
+    question.image = Image.Text(prompt, 1, 1, 1);
+    question.sprite = Sprite(question.image);
+    question.sprite.SetX(screen.half.w - question.image.GetWidth() / 2);
+    question.sprite.SetY(screen.h - 4 * question.image.GetHeight());
+
+    answer.image = Image.Text(entry, 1, 1, 1);
+    answer.sprite = Sprite(answer.image);
+    answer.sprite.SetX(screen.half.w - answer.image.GetWidth() / 2);
+    answer.sprite.SetY(screen.h - 2 * answer.image.GetHeight());
+}
+Plymouth.SetDisplayQuestionFunction(DisplayQuestionCallback);
+
+//------------------------------------- Password prompt -------------------------------
+function DisplayPasswordCallback(nil, bulletCount) {
+    state.status = "pause";
+    totalWidth = bulletCount * bullet.image.GetWidth();
+    startPos = screen.half.w - totalWidth / 2;
+
+    prompt.image = Image.Text("Enter Password", 1, 1, 1);
+    prompt.sprite = Sprite(prompt.image);
+    prompt.sprite.SetX(screen.half.w - prompt.image.GetWidth() / 2);
+    prompt.sprite.SetY(screen.h - 4 * prompt.image.GetHeight());
+
+    // Clear all bullets (user might hit backspace)
+    bullets = null;
+    for (i = 0; i < bulletCount; i++) {
+        bullets[i].sprite = Sprite(bullet.image);
+        bullets[i].sprite.SetX(startPos + i * bullet.image.GetWidth());
+        bullets[i].sprite.SetY(screen.h - 2 * bullet.image.GetHeight());
+    }
+}
+Plymouth.SetDisplayPasswordFunction(DisplayPasswordCallback);
+
+//--------------------------- Normal display (unset all text) ----------------------
+function DisplayNormalCallback() {
+    state.status = "play";
+    bullets = null;
+    prompt = null;
+    message = null;
+    question = null;
+    answer = null;
+}
+Plymouth.SetDisplayNormalFunction(DisplayNormalCallback);
+
+//----------------------------------------- Message --------------------------------
+function MessageCallback(text) {
+    message.image = Image.Text(text, 1, 1, 1);
+    message.sprite = Sprite(message.image);
+    message.sprite.SetPosition(screen.half.w - message.image.GetWidth() / 2, message.image.GetHeight());
+}
+Plymouth.SetMessageFunction(MessageCallback);
+
 //--------------------------------------------- Dialogue ----------------------------------------------------//
 
 status = "normal";
@@ -104,8 +182,8 @@ function display_password_callback(prompt, bullets) {
 	}
 }
 
-Plymouth.SetDisplayNormalFunction(display_normal_callback);
-Plymouth.SetDisplayPasswordFunction(display_password_callback);
+//Plymouth.SetDisplayNormalFunction(display_normal_callback);
+//Plymouth.SetDisplayPasswordFunction(display_password_callback);
 
 //-------------------------------------------- Progress Bar --------------------------------------------------//
 
@@ -155,5 +233,5 @@ function hide_message_callback(text) {
 	}
 }
 
-Plymouth.SetDisplayMessageFunction(display_message_callback);
-Plymouth.SetHideMessageFunction(hide_message_callback);
+//Plymouth.SetDisplayMessageFunction(display_message_callback);
+//Plymouth.SetHideMessageFunction(hide_message_callback);
